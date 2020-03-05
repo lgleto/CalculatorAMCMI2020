@@ -10,9 +10,7 @@ class MainActivity : AppCompatActivity() {
 
     var operand = 0.0
     var operator = ""
-
     var userIsInTheMiddleOfOperation = false
-
     var hasDot = false
 
     var displayFun : ((view:View)->Unit) = { view : View ->
@@ -42,11 +40,15 @@ class MainActivity : AppCompatActivity() {
             operand = textViewDisplay.text.toString().toDouble()
             operator = (view as Button).text.toString()
             userIsInTheMiddleOfOperation = false
+            hasDot = false
         }else {
             var secondOperand = textViewDisplay.text.toString().toDouble()
             var result = doOperation(operand,secondOperand, operator)
+            operator = (view as Button).text.toString()
+            operand = result
             textViewDisplay.text = "${result}"
             userIsInTheMiddleOfOperation = false
+            hasDot = false
         }
 
     }
@@ -96,6 +98,14 @@ class MainActivity : AppCompatActivity() {
             var result = doOperation(operand,secondOperand, operator)
             textViewDisplay.text = "${result}"
             userIsInTheMiddleOfOperation = false
+        }
+
+        buttonClear.setOnClickListener{
+            textViewDisplay.text = "0"
+            operand = 0.0
+            operator = ""
+            userIsInTheMiddleOfOperation = false
+            hasDot = false
         }
 
     }
